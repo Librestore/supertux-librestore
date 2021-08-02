@@ -1,0 +1,3 @@
+[submodule "supertux"]
+	path = supertux
+	url = https://github.com/supertux/supertux.git
