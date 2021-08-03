@@ -9,6 +9,9 @@ if [ ! -d "$DESTDIR" ]; then
   exit 1
 fi
 
+# Install dependencies
+# TODO: Install clickable
+
 # Fetch repo
 git clone https://github.com/supertux/supertux || true
 cd supertux/
@@ -17,12 +20,6 @@ if [ ! "$LIBRESTORE_CHECKOUT" = "" ]; then
 fi
 git submodule update --init --recursive
 
-# Package source code
-mkdir -p build.source
-cd build.source
-cmake -DCMAKE_BUILD_TYPE=Release ..
-cpack --config CPackSourceConfig.cmake -G ZIP
-
-# Move artifacts
-mv -u $(ls SuperTux*.zip | head -1) $DESTDIR
+# Build
+clickable build --verbose --arch amd64 --config mk/clickable/clickable.json --output "$(realpath -m "$DESTDIR")"
 

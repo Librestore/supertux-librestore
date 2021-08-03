@@ -4,7 +4,7 @@ set -e
 cd $(dirname $0)/..
 DESTDIR="$(pwd)/$1"
 
-if [ ! -d  "$DESTDIR" ]; then
+if [ ! -d "$DESTDIR" ]; then
   echo "path '$DESTDIR' is not a valid folder"
   exit 1
 fi
@@ -30,9 +30,16 @@ git clone https://github.com/microsoft/vcpkg || true
 ./vcpkg/vcpkg install libvorbis:wasm32-emscripten
 ./vcpkg/vcpkg install glm:wasm32-emscripten
 
-# Build
+# Fetch repo
+git clone https://github.com/supertux/supertux || true
+cd supertux/
+if [ ! "$LIBRESTORE_CHECKOUT" = "" ]; then
+  git checkout $LIBRESTORE_CHECKOUT
+fi
 git submodule update --init --recursive
-cd supertux/external/SDL_ttf
+
+# Build
+cd external/SDL_ttf
 git apply ../../mk/emscripten/SDL_ttf.patch || true
 cd ../..
 mkdir -p build.wasm

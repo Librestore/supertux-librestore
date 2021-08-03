@@ -4,7 +4,7 @@ set -e
 cd $(dirname $0)/..
 DESTDIR="$(pwd)/$1"
 
-if [ ! -d  "$DESTDIR" ]; then
+if [ ! -d "$DESTDIR" ]; then
   echo "path '$DESTDIR' is not a valid folder"
   exit 1
 fi
@@ -12,9 +12,15 @@ fi
 # Install dependencies
 # TODO
 
+# Fetch repo
+git clone https://github.com/supertux/supertux || true
+cd supertux/
+if [ ! "$LIBRESTORE_CHECKOUT" = "" ]; then
+  git checkout $LIBRESTORE_CHECKOUT
+fi
+
 # Build
 git submodule update --init --recursive
-cd supertux/
 mkdir -p build.gnu
 cd build.gnu
 cmake -DCMAKE_BUILD_TYPE=Release ..
