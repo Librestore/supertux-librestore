@@ -1,0 +1,82 @@
+name: validate
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gnu:
+    strategy:
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Make directories
+        run: |
+          mkdir librestore_gnu_package
+          mkdir librestore_gnu_install
+          mkdir librestore_gnu_userconfig
+
+      - name: Compile
+        run: ./.librestore/gnu.sh librestore_gnu_package
+
+      - name: Test install
+        run: ./librestore_gnu_package/install.sh ../librestore_gnu_install
+
+      - name: Test run
+        run: ./librestore_gnu_install/run.sh ../librestore_gnu_userconfig
+
+  source:
+    strategy:
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Compile
+        run: |
+          ./.librestore/source.sh .
+          ls ./*.zip # Asserts the file is there
+
+  utouch:
+    strategy:
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Compile
+        run: |
+          ./.librestore/utouch.sh .
+          ls ./*.click # Asserts the file is there
+
+  wasm:
+    strategy:
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Compile
+        run: |
+          ./.librestore/wasm.sh .
+          ls ./supertux2.zip # Asserts the file is there
+
+  # TODO: Windows

@@ -2,7 +2,7 @@
 
 set -e
 cd $(dirname $0)/..
-DESTDIR="$(pwd)/$1"
+DESTDIR="$(realpath "$1")"
 
 if [ ! -d "$DESTDIR" ]; then
   echo "path '$DESTDIR' is not a valid folder"

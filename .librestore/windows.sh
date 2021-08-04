@@ -2,7 +2,7 @@
 
 set -e
 cd $(dirname $0)/..
-DESTDIR="$(pwd)/$1"
+DESTDIR="$(realpath "$1")"
 
 if [ ! -d "$DESTDIR" ]; then
   echo "path '$DESTDIR' is not a valid folder"
@@ -11,7 +11,7 @@ fi
 
 # Install dependencies
 git clone https://github.com/microsoft/vcpkg || true
-./vcpkg/bootstrap-vcpkg.sh
+./vcpkg/bootstrap-vcpkg.sh -disableMetrics
 ./vcpkg/vcpkg integrate install
 ./vcpkg/vcpkg install boost-date-time:x64-mingw-static
 ./vcpkg/vcpkg install boost-filesystem:x64-mingw-static
@@ -26,8 +26,7 @@ git clone https://github.com/microsoft/vcpkg || true
 ./vcpkg/vcpkg install libpng:x64-mingw-static
 ./vcpkg/vcpkg install libraqm:x64-mingw-static
 ./vcpkg/vcpkg install libvorbis:x64-mingw-static
-./vcpkg/vcpkg install openal-soft:x64-mingw-static # FIXME
-exit 1
+./vcpkg/vcpkg install openal-soft:x64-mingw-static # FIXME: This won't work
 ./vcpkg/vcpkg install sdl2:x64-mingw-static
 ./vcpkg/vcpkg install sdl2-image:x64-mingw-static
 ./vcpkg/vcpkg install glm:x64-mingw-static
