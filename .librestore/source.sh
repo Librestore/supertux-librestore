@@ -13,6 +13,7 @@ fi
 git clone https://github.com/supertux/supertux || true
 cd supertux/
 if [ ! "$LIBRESTORE_CHECKOUT" = "" ]; then
+  git fetch
   git checkout $LIBRESTORE_CHECKOUT
 fi
 git submodule update --init --recursive

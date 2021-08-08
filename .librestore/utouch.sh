@@ -9,13 +9,11 @@ if [ ! -d "$DESTDIR" ]; then
   exit 1
 fi
 
-# Install dependencies
-# TODO: Install clickable
-
 # Fetch repo
 git clone https://github.com/supertux/supertux || true
 cd supertux/
 if [ ! "$LIBRESTORE_CHECKOUT" = "" ]; then
+  git fetch
   git checkout $LIBRESTORE_CHECKOUT
 fi
 git submodule update --init --recursive

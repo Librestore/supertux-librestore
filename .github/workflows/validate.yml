@@ -31,21 +31,22 @@ jobs:
       - name: Test run
         run: ./librestore_gnu_install/run.sh ../librestore_gnu_userconfig
 
-  source:
-    strategy:
-      fail-fast: false
+  # FIXME: Source packages are broken because they require dependencies
+  #source:
+  #  strategy:
+  #    fail-fast: false
 
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          submodules: true
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #      with:
+  #        fetch-depth: 0
+  #        submodules: true
 
-      - name: Compile
-        run: |
-          ./.librestore/source.sh .
-          ls ./*.zip # Asserts the file is there
+  #    - name: Package
+  #      run: |
+  #        ./.librestore/source.sh .
+  #        ls ./*.zip # Asserts the file is there
 
   utouch:
     strategy:
@@ -57,6 +58,18 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true
+
+      - name: Install clickable
+        run: |
+          # For whatever reason, I have to manually install runc before docker.io or containerd, else it fails because of broken dependency
+          # Using apt-get because apt complains it shouldn't be used in scripts
+          sudo apt-get update
+          sudo apt-get install -y runc
+          sudo apt-get install -y docker.io adb git python3 python3-pip
+          pip3 install --user git+https://gitlab.com/clickable/clickable.git@debug
+          # Clickable requires a reboot/logout. This is a sneaky way to bypass that :^)
+          sudo systemctl unmask docker.service
+          sudo systemctl start docker.service
 
       - name: Compile
         run: |
