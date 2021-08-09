@@ -50,8 +50,8 @@ rsync -aP ../data/ data/
 emmake make -j$(nproc)
 rm supertux2.html supertux2.desktop
 cp -u template.html index.html
-zip supertux2.zip supertux2* index.html
 
 # Move artifacts
-mv -u supertux2.zip "$DESTDIR"
+mv -u supertux2* "$DESTDIR"
+mv -u index.html "$DESTDIR"
 
