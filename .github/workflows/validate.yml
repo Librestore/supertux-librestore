@@ -16,8 +16,9 @@ jobs:
           fetch-depth: 0
           submodules: true
 
-      - name: Make directories
+      - name: Prepare the environment
         run: |
+          sudo apt-get install libxmu-dev libxi-dev libgl-dev
           mkdir librestore_gnu_package
           mkdir librestore_gnu_install
           mkdir librestore_gnu_userconfig
@@ -90,6 +91,6 @@ jobs:
       - name: Compile
         run: |
           ./.librestore/wasm.sh .
-          ls ./supertux2.zip # Asserts the file is there
+          ls index.html supertux2.{data,js,wasm} # Asserts the files are there
 
   # TODO: Windows
