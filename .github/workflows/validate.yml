@@ -18,7 +18,7 @@ jobs:
 
       - name: Prepare the environment
         run: |
-          sudo apt-get install libxmu-dev libxi-dev libgl-dev
+          sudo apt-get install libxmu-dev libxi-dev libgl-dev libglu1-mesa-dev
           mkdir librestore_gnu_package
           mkdir librestore_gnu_install
           mkdir librestore_gnu_userconfig

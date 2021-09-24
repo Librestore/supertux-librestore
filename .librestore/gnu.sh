@@ -13,23 +13,23 @@ fi
 git clone https://github.com/microsoft/vcpkg || true
 ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
 ./vcpkg/vcpkg integrate install
-./vcpkg/vcpkg install boost-date-time:x64-linux
-./vcpkg/vcpkg install boost-filesystem:x64-linux
-./vcpkg/vcpkg install boost-format:x64-linux
-./vcpkg/vcpkg install boost-locale:x64-linux
-./vcpkg/vcpkg install boost-optional:x64-linux
-./vcpkg/vcpkg install boost-system:x64-linux
-./vcpkg/vcpkg install curl:x64-linux
-./vcpkg/vcpkg install --recurse freetype:x64-linux
-./vcpkg/vcpkg install glew:x64-linux
-./vcpkg/vcpkg install libogg:x64-linux
-./vcpkg/vcpkg install libpng:x64-linux
-./vcpkg/vcpkg install libraqm:x64-linux
-./vcpkg/vcpkg install libvorbis:x64-linux
-./vcpkg/vcpkg install openal-soft:x64-linux
-./vcpkg/vcpkg install sdl2:x64-linux
-./vcpkg/vcpkg install sdl2-image:x64-linux
-./vcpkg/vcpkg install glm:x64-linux
+./vcpkg/vcpkg install boost-date-time:x64-linux                                \
+                      boost-filesystem:x64-linux                               \
+                      boost-format:x64-linux                                   \
+                      boost-locale:x64-linux                                   \
+                      boost-optional:x64-linux                                 \
+                      boost-system:x64-linux                                   \
+                      curl:x64-linux                                           \
+                      --recurse freetype:x64-linux                             \
+                      glew:x64-linux                                           \
+                      libogg:x64-linux                                         \
+                      libpng:x64-linux                                         \
+                      libraqm:x64-linux                                        \
+                      libvorbis:x64-linux                                      \
+                      openal-soft:x64-linux                                    \
+                      sdl2:x64-linux                                           \
+                      sdl2-image:x64-linux                                     \
+                      glm:x64-linux
 
 # Fetch repo
 git clone https://github.com/supertux/supertux || true

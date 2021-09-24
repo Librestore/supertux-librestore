@@ -18,17 +18,17 @@ source ./emsdk/emsdk_env.sh
 git clone https://github.com/microsoft/vcpkg || true
 ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
 ./vcpkg/vcpkg integrate install
-./vcpkg/vcpkg install boost-date-time:wasm32-emscripten
-./vcpkg/vcpkg install boost-filesystem:wasm32-emscripten
-./vcpkg/vcpkg install boost-format:wasm32-emscripten
-./vcpkg/vcpkg install boost-locale:wasm32-emscripten
-./vcpkg/vcpkg install boost-optional:wasm32-emscripten
-./vcpkg/vcpkg install boost-system:wasm32-emscripten
-./vcpkg/vcpkg install glbinding:wasm32-emscripten
-./vcpkg/vcpkg install libpng:wasm32-emscripten
-./vcpkg/vcpkg install libogg:wasm32-emscripten
-./vcpkg/vcpkg install libvorbis:wasm32-emscripten
-./vcpkg/vcpkg install glm:wasm32-emscripten
+./vcpkg/vcpkg install boost-date-time:wasm32-emscripten                        \
+                      boost-filesystem:wasm32-emscripten                       \
+                      boost-format:wasm32-emscripten                           \
+                      boost-locale:wasm32-emscripten                           \
+                      boost-optional:wasm32-emscripten                         \
+                      boost-system:wasm32-emscripten                           \
+                      glbinding:wasm32-emscripten                              \
+                      libpng:wasm32-emscripten                                 \
+                      libogg:wasm32-emscripten                                 \
+                      libvorbis:wasm32-emscripten                              \
+                      glm:wasm32-emscripten
 
 # Fetch repo
 git clone https://github.com/supertux/supertux || true
