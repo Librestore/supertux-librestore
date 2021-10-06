@@ -32,22 +32,21 @@ jobs:
       - name: Test run
         run: ./librestore_gnu_install/run.sh ../librestore_gnu_userconfig
 
-  # FIXME: Source packages are broken because they require dependencies
-  #source:
-  #  strategy:
-  #    fail-fast: false
+  source:
+    strategy:
+      fail-fast: false
 
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - uses: actions/checkout@v2
-  #      with:
-  #        fetch-depth: 0
-  #        submodules: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
 
-  #    - name: Package
-  #      run: |
-  #        ./.librestore/source.sh .
-  #        ls ./*.zip # Asserts the file is there
+      - name: Package
+        run: |
+          ./.librestore/source.sh .
+          ls ./*.zip # Asserts the file is there
 
   utouch:
     strategy:

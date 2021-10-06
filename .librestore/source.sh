@@ -9,6 +9,14 @@ if [ ! -d "$DESTDIR" ]; then
   exit 1
 fi
 
+# Install dependencies
+sudo apt-get update
+sudo apt-get install -y cmake build-essential libgtest-dev libc++-dev          \
+                        libogg-dev libvorbis-dev libopenal-dev libboost-all-dev\
+                        libsdl2-dev libsdl2-image-dev libfreetype6-dev         \
+                        libharfbuzz-dev libfribidi-dev libraqm-dev libglew-dev \
+                        libcurl4-openssl-dev libglm-dev
+
 # Fetch repo
 git clone https://github.com/supertux/supertux || true
 cd supertux/
