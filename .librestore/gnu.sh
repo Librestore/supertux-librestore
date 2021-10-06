@@ -10,26 +10,12 @@ if [ ! -d "$DESTDIR" ]; then
 fi
 
 # Install dependencies
-git clone https://github.com/microsoft/vcpkg || true
-./vcpkg/bootstrap-vcpkg.sh -disableMetrics
-./vcpkg/vcpkg integrate install
-./vcpkg/vcpkg install boost-date-time:x64-linux                                \
-                      boost-filesystem:x64-linux                               \
-                      boost-format:x64-linux                                   \
-                      boost-locale:x64-linux                                   \
-                      boost-optional:x64-linux                                 \
-                      boost-system:x64-linux                                   \
-                      curl:x64-linux                                           \
-                      --recurse freetype:x64-linux                             \
-                      glew:x64-linux                                           \
-                      libogg:x64-linux                                         \
-                      libpng:x64-linux                                         \
-                      libraqm:x64-linux                                        \
-                      libvorbis:x64-linux                                      \
-                      openal-soft:x64-linux                                    \
-                      sdl2:x64-linux                                           \
-                      sdl2-image:x64-linux                                     \
-                      glm:x64-linux
+sudo apt-get update
+sudo apt-get install -y cmake build-essential libgtest-dev libc++-dev          \
+                        libogg-dev libvorbis-dev libopenal-dev libboost-all-dev\
+                        libsdl2-dev libsdl2-image-dev libfreetype6-dev         \
+                        libharfbuzz-dev libfribidi-dev libraqm-dev libglew-dev \
+                        libcurl4-openssl-dev libglm-dev
 
 # Fetch repo
 git clone https://github.com/supertux/supertux || true
@@ -43,7 +29,7 @@ fi
 git submodule update --init --recursive
 mkdir -p build.gnu2
 cd build.gnu2
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../../vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-linux -DVCPKG_BUILD=ON ..
+cmake -DCMAKE_BUILD_TYPE=Release ..
 make -j$(nproc)
 cpack -G STGZ
 
