@@ -20,4 +20,3 @@ git submodule update --init --recursive
 
 # Build
 clickable build --verbose --arch amd64 --config mk/clickable/clickable.json --output "$(realpath -m "$DESTDIR")"
-

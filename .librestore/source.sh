@@ -14,8 +14,8 @@ sudo apt-get update
 sudo apt-get install -y cmake build-essential libgtest-dev libc++-dev          \
                         libogg-dev libvorbis-dev libopenal-dev libboost-all-dev\
                         libsdl2-dev libsdl2-image-dev libfreetype6-dev         \
-                        libharfbuzz-dev libfribidi-dev libraqm-dev libglew-dev \
-                        libcurl4-openssl-dev libglm-dev
+                        libharfbuzz-dev libfribidi-dev libglew-dev             \
+                        libcurl4-openssl-dev libglm-dev # TODO: Add libraqm-dev
 
 # Fetch repo
 git clone https://github.com/supertux/supertux || true
@@ -34,4 +34,3 @@ cpack --config CPackSourceConfig.cmake -G ZIP
 
 # Move artifacts
 mv -u $(ls SuperTux*.zip | head -1) $DESTDIR
-

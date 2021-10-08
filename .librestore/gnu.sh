@@ -14,8 +14,8 @@ sudo apt-get update
 sudo apt-get install -y cmake build-essential libgtest-dev libc++-dev          \
                         libogg-dev libvorbis-dev libopenal-dev libboost-all-dev\
                         libsdl2-dev libsdl2-image-dev libfreetype6-dev         \
-                        libharfbuzz-dev libfribidi-dev libraqm-dev libglew-dev \
-                        libcurl4-openssl-dev libglm-dev
+                        libharfbuzz-dev libfribidi-dev libglew-dev             \
+                        libcurl4-openssl-dev libglm-dev # TODO: Add libraqm-dev
 
 # Fetch repo
 git clone https://github.com/supertux/supertux || true
@@ -48,4 +48,3 @@ echo "#!/usr/bin/env bash" > "$DESTDIR/run.sh"
 echo "set -e" >> "$DESTDIR/run.sh"
 echo "\$(dirname \"\$0\")/games/supertux2 --datadir \$(dirname \"\$0\")/share/games/supertux2 --userdir \$1" >> "$DESTDIR/run.sh"
 chmod +x "$DESTDIR/run.sh"
-

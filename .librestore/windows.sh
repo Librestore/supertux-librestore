@@ -55,4 +55,3 @@ mv -u $OUTPUT "$DESTDIR"
 
 # Prepare install and launch scripts
 # TODO
-

@@ -54,4 +54,3 @@ cp -u template.html index.html
 # Move artifacts
 mv -u supertux2* "$DESTDIR"
 mv -u index.html "$DESTDIR"
-
