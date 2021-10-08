@@ -10,6 +10,9 @@ if [ ! -d "$DESTDIR" ]; then
 fi
 
 # Install dependencies
+sudo apt install gcc-7 g++-7
+export CC=gcc-7
+export CXX=g++-7
 git clone https://github.com/emscripten-core/emsdk.git || true
 ./emsdk/emsdk install 1.40.1
 ./emsdk/emsdk activate 1.40.1
