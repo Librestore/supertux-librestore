@@ -22,8 +22,8 @@ jobs:
 
       - name: Compile
         run: |
-          ./.librestore/gnu.sh output.zip
-          ls ./output.zip # Asserts the file is there
+          sudo ./.librestore/gnu.sh /output.zip
+          ls /output.zip # Asserts the file is there
 
   source:
     strategy:
@@ -38,8 +38,8 @@ jobs:
 
       - name: Package
         run: |
-          ./.librestore/source.sh output.zip
-          ls ./output.zip # Asserts the file is there
+          sudo ./.librestore/source.sh /output.zip
+          ls /output.zip # Asserts the file is there
 
   utouch:
     strategy:
@@ -59,15 +59,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y runc
           sudo apt-get install -y docker.io adb git python3 python3-pip
-          pip3 install --user git+https://gitlab.com/clickable/clickable.git@debug
+          sudo pip3 install git+https://gitlab.com/clickable/clickable.git
           # Clickable requires a reboot/logout. This is a sneaky way to bypass that :^)
+          sudo usermod -a -G docker root
           sudo systemctl unmask docker.service
           sudo systemctl start docker.service
 
       - name: Compile
         run: |
-          ./.librestore/utouch.sh output.zip
-          ls ./output.zip # Asserts the file is there
+          sudo ./.librestore/utouch.sh /output.zip
+          ls /output.zip # Asserts the file is there
 
   wasm:
     strategy:
@@ -82,7 +83,7 @@ jobs:
 
       - name: Compile
         run: |
-          ./.librestore/wasm.sh output.zip
-          ls ./output.zip # Asserts the file is there
+          sudo ./.librestore/wasm.sh /output.zip
+          ls /output.zip # Asserts the file is there
 
   # TODO: Windows

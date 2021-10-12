@@ -2,12 +2,18 @@
 
 set -e
 cd $(dirname $0)/..
-DESTZIP="$(realpath -m "$1")"
+DESTZIP="$1"
 DESTDIR=$(mktemp -d)
+
+if [ "$TZ" = "" ]; then
+  export TZ="America/New_York"
+  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+fi
 
 # Install dependencies
 apt-get update
-apt-get install -y sudo zip git
+apt-get install -y sudo zip git python3 cmake curl build-essential pkg-config  \
+                   rsync
 
 git clone https://github.com/emscripten-core/emsdk.git || true
 ./emsdk/emsdk install 1.40.1
@@ -35,7 +41,7 @@ git clone https://github.com/supertux/supertux || true
 cd supertux/
 if [ ! "$LIBRESTORE_CHECKOUT" = "" ]; then
   git fetch
-  git checkout $LIBRESTORE_CHECKOUT
+  git checkout "$LIBRESTORE_CHECKOUT"
 fi
 git submodule update --init --recursive
 
@@ -55,5 +61,5 @@ cp -u template.html index.html
 mv -u supertux2* "$DESTDIR"
 mv -u index.html "$DESTDIR"
 
-cd $DESTDIR
-zip $DESTZIP ./* ./.*
+cd "$DESTDIR"
+zip "$DESTZIP" -r .

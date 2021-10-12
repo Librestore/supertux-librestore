@@ -2,7 +2,7 @@
 
 set -e
 cd $(dirname $0)/..
-DESTZIP="$(realpath -m "$1")"
+DESTZIP="$1"
 
 if [ "$TZ" = "" ]; then
   export TZ="America/New_York"
@@ -22,7 +22,7 @@ git clone https://github.com/supertux/supertux || true
 cd supertux/
 if [ ! "$LIBRESTORE_CHECKOUT" = "" ]; then
   git fetch
-  git checkout $LIBRESTORE_CHECKOUT
+  git checkout "$LIBRESTORE_CHECKOUT"
 fi
 git submodule update --init --recursive
 

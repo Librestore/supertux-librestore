@@ -2,7 +2,7 @@
 
 set -e
 cd $(dirname $0)/..
-DESTZIP="$(realpath -m "$1")"
+DESTZIP="$1"
 DESTDIR=$(mktemp -d)
 
 if [ "$TZ" = "" ]; then
@@ -23,20 +23,20 @@ git clone https://github.com/supertux/supertux || true
 cd supertux/
 if [ ! "$LIBRESTORE_CHECKOUT" = "" ]; then
   git fetch
-  git checkout $LIBRESTORE_CHECKOUT
+  git checkout "$LIBRESTORE_CHECKOUT"
 fi
 
 # Build
 git submodule update --init --recursive
-mkdir -p build.gnu2
-cd build.gnu2
+mkdir -p build.gnu
+cd build.gnu
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make -j$(nproc)
 cpack -G STGZ
 
 # Move artifacts
 OUTPUT=$(ls SuperTux*.sh | head -1)
-mv -u $OUTPUT "$DESTDIR"
+mv -u "$OUTPUT" "$DESTDIR"
 
 # Prepare install and launch scripts
 echo "#!/usr/bin/env bash" > "$DESTDIR/install.sh"
@@ -50,5 +50,5 @@ echo "set -e" >> "$DESTDIR/run.sh"
 echo "\$(dirname \"\$0\")/games/supertux2 --datadir \$(dirname \"\$0\")/share/games/supertux2 --userdir \$1" >> "$DESTDIR/run.sh"
 chmod +x "$DESTDIR/run.sh"
 
-cd $DESTDIR
-zip $DESTZIP ./* ./.*
+cd "$DESTDIR"
+zip "$DESTZIP" -r .

@@ -4,8 +4,13 @@ exit 1 # It's broken
 
 set -e
 cd $(dirname $0)/..
-DESTZIP="$(realpath -m "$1")"
+DESTZIP="$1"
 DESTDIR=$(mktemp -d)
+
+if [ "$TZ" = "" ]; then
+  export TZ="America/New_York"
+  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+fi
 
 # Install dependencies
 git clone https://github.com/microsoft/vcpkg || true
@@ -34,7 +39,7 @@ git clone https://github.com/supertux/supertux || true
 cd supertux/
 if [ ! "$LIBRESTORE_CHECKOUT" = "" ]; then
   git fetch
-  git checkout $LIBRESTORE_CHECKOUT
+  git checkout "$LIBRESTORE_CHECKOUT"
 fi
 git submodule update --init --recursive
 
