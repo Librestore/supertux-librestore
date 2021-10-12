@@ -2,12 +2,8 @@
 
 set -e
 cd $(dirname $0)/..
-DESTDIR="$(realpath "$1")"
-
-if [ ! -d "$DESTDIR" ]; then
-  echo "path '$DESTDIR' is not a valid folder"
-  exit 1
-fi
+DESTZIP="$(realpath "$1")"
+DESTDIR=$(mktemp -d)
 
 # Fetch repo
 git clone https://github.com/supertux/supertux || true
@@ -20,3 +16,6 @@ git submodule update --init --recursive
 
 # Build
 clickable build --verbose --arch amd64 --config mk/clickable/clickable.json --output "$(realpath -m "$DESTDIR")"
+
+cd $DESTDIR
+zip $DESTZIP ./* ./.*

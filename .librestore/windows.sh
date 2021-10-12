@@ -4,12 +4,8 @@ exit 1 # It's broken
 
 set -e
 cd $(dirname $0)/..
-DESTDIR="$(realpath "$1")"
-
-if [ ! -d "$DESTDIR" ]; then
-  echo "path '$DESTDIR' is not a valid folder"
-  exit 1
-fi
+DESTZIP="$(realpath "$1")"
+DESTDIR=$(mktemp -d)
 
 # Install dependencies
 git clone https://github.com/microsoft/vcpkg || true
@@ -55,3 +51,7 @@ mv -u $OUTPUT "$DESTDIR"
 
 # Prepare install and launch scripts
 # TODO
+
+
+cd $DESTDIR
+zip $DESTZIP ./* ./.*

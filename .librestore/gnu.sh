@@ -2,20 +2,21 @@
 
 set -e
 cd $(dirname $0)/..
-DESTDIR="$(realpath "$1")"
+DESTZIP="$(realpath "$1")"
+DESTDIR=$(mktemp -d)
 
-if [ ! -d "$DESTDIR" ]; then
-  echo "path '$DESTDIR' is not a valid folder"
-  exit 1
+if [ "$TZ" = "" ]; then
+  export TZ="America/New_York"
+  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 fi
 
 # Install dependencies
 sudo apt-get update
-sudo apt-get install -y cmake build-essential libgtest-dev libc++-dev          \
+sudo apt-get install -y sudo zip build-essential cmake libgtest-dev libc++-dev \
                         libogg-dev libvorbis-dev libopenal-dev libboost-all-dev\
                         libsdl2-dev libsdl2-image-dev libfreetype6-dev         \
-                        libharfbuzz-dev libfribidi-dev libglew-dev             \
-                        libcurl4-openssl-dev libglm-dev # TODO: Add libraqm-dev
+                        libharfbuzz-dev libfribidi-dev libraqm-dev libglew-dev \
+                        libcurl4-openssl-dev libglm-dev
 
 # Fetch repo
 git clone https://github.com/supertux/supertux || true
@@ -48,3 +49,6 @@ echo "#!/usr/bin/env bash" > "$DESTDIR/run.sh"
 echo "set -e" >> "$DESTDIR/run.sh"
 echo "\$(dirname \"\$0\")/games/supertux2 --datadir \$(dirname \"\$0\")/share/games/supertux2 --userdir \$1" >> "$DESTDIR/run.sh"
 chmod +x "$DESTDIR/run.sh"
+
+cd $DESTDIR
+zip $DESTZIP ./* ./.*

@@ -19,20 +19,11 @@ jobs:
       - name: Prepare the environment
         run: |
           sudo apt-get install libxmu-dev libxi-dev libgl-dev libglu1-mesa-dev
-          mkdir librestore_gnu_package
-          mkdir librestore_gnu_install
-          mkdir librestore_gnu_userconfig
 
       - name: Compile
-        run: ./.librestore/gnu.sh librestore_gnu_package
-
-      - name: Test install
-        if: false # FIXME: Fails because of some gzip broken pipe thing
-        run: ./librestore_gnu_package/install.sh ../librestore_gnu_install
-
-      - name: Test run
-        if: false # FIXME: Re-enable when step above is fixed
-        run: ./librestore_gnu_install/run.sh ../librestore_gnu_userconfig
+        run: |
+          ./.librestore/gnu.sh output.zip
+          ls ./output.zip # Asserts the file is there
 
   source:
     strategy:
@@ -47,8 +38,8 @@ jobs:
 
       - name: Package
         run: |
-          ./.librestore/source.sh .
-          ls ./*.zip # Asserts the file is there
+          ./.librestore/source.sh output.zip
+          ls ./output.zip # Asserts the file is there
 
   utouch:
     strategy:
@@ -75,8 +66,8 @@ jobs:
 
       - name: Compile
         run: |
-          ./.librestore/utouch.sh .
-          ls ./*.click # Asserts the file is there
+          ./.librestore/utouch.sh output.zip
+          ls ./output.zip # Asserts the file is there
 
   wasm:
     strategy:
@@ -91,7 +82,7 @@ jobs:
 
       - name: Compile
         run: |
-          ./.librestore/wasm.sh .
-          ls index.html supertux2.{data,js,wasm} # Asserts the files are there
+          ./.librestore/wasm.sh output.zip
+          ls ./output.zip # Asserts the file is there
 
   # TODO: Windows

@@ -2,17 +2,10 @@
 
 set -e
 cd $(dirname $0)/..
-DESTDIR="$(realpath "$1")"
-
-if [ ! -d "$DESTDIR" ]; then
-  echo "path '$DESTDIR' is not a valid folder"
-  exit 1
-fi
+DESTZIP="$(realpath "$1")"
+DESTDIR=$(mktemp -d)
 
 # Install dependencies
-sudo apt-get install -y clang-6.0
-export CC=clang-6.0
-export CXX=clang++-6.0
 git clone https://github.com/emscripten-core/emsdk.git || true
 ./emsdk/emsdk install 1.40.1
 ./emsdk/emsdk activate 1.40.1
@@ -57,3 +50,6 @@ cp -u template.html index.html
 # Move artifacts
 mv -u supertux2* "$DESTDIR"
 mv -u index.html "$DESTDIR"
+
+cd $DESTDIR
+zip $DESTZIP ./* ./.*
