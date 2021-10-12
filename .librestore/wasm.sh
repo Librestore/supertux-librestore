@@ -2,7 +2,7 @@
 
 set -e
 cd $(dirname $0)/..
-DESTZIP="$(realpath "$1")"
+DESTZIP="$(realpath -m "$1")"
 DESTDIR=$(mktemp -d)
 
 # Install dependencies

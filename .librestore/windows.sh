@@ -4,7 +4,7 @@ exit 1 # It's broken
 
 set -e
 cd $(dirname $0)/..
-DESTZIP="$(realpath "$1")"
+DESTZIP="$(realpath -m "$1")"
 DESTDIR=$(mktemp -d)
 
 # Install dependencies
@@ -51,7 +51,6 @@ mv -u $OUTPUT "$DESTDIR"
 
 # Prepare install and launch scripts
 # TODO
-
 
 cd $DESTDIR
 zip $DESTZIP ./* ./.*
