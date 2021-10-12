@@ -6,11 +6,15 @@ DESTZIP="$(realpath "$1")"
 DESTDIR=$(mktemp -d)
 
 # Install dependencies
+apt-get update
+apt-get install -y sudo zip git
+
 git clone https://github.com/emscripten-core/emsdk.git || true
 ./emsdk/emsdk install 1.40.1
 ./emsdk/emsdk activate 1.40.1
 sed -i "s/\#define MALLOC_ALIGNMENT ((size_t)(2 \* sizeof(void \*)))/#define MALLOC_ALIGNMENT 16/g" emsdk/upstream/emscripten/system/lib/dlmalloc.c # Fixes a bug in emscripten - see https://github.com/emscripten-core/emscripten/issues/13590
 source ./emsdk/emsdk_env.sh
+
 git clone https://github.com/microsoft/vcpkg || true
 ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
 ./vcpkg/vcpkg integrate install
